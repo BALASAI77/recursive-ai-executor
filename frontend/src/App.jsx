@@ -12,6 +12,9 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
 
+  // ✅ Use env variable for backend URL
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
   const handleGenerate = async () => {
     if (!prompt.trim()) {
       alert('Please enter a prompt!');
@@ -25,19 +28,45 @@ function App() {
 
     while (attempts < maxRetries) {
       attempts++;
-      setRetryCount(attempts); // Update retry count for each attempt
+      setRetryCount(attempts);
+
       try {
-        const response = await axios.post('https://recursive-ai-executor.onrender.com/execute', { prompt });
-        setCode(response.data.final_code || '# No code generated...');
-        setOutput(response.data.output || 'No terminal output available. Backend may not execute code.');
-        setLogs([...logs, { prompt, code: response.data.final_code, output: response.data.output, timestamp: new Date().toISOString(), retries: attempts }]);
-        break; // Exit on success
+        const response = await axios.post(`${API_URL}/execute`, { prompt });
+        const finalCode = response.data.final_code || '# No code generated...';
+        const finalOutput =
+          response.data.output ||
+          'No terminal output available. Backend may not execute code.';
+
+        setCode(finalCode);
+        setOutput(finalOutput);
+
+        setLogs((prevLogs) => [
+          ...prevLogs,
+          {
+            prompt,
+            code: finalCode,
+            output: finalOutput,
+            timestamp: new Date().toISOString(),
+            retries: attempts,
+          },
+        ]);
+
+        break; // Exit loop on success
       } catch (error) {
         console.error('Error on attempt', attempts, ':', error);
         if (attempts === maxRetries) {
           setCode('# Error connecting to backend after max retries...');
           setOutput('Max retries reached. Check backend logs.');
-          setLogs([...logs, { prompt, code: '# Error', output: 'Max retries reached.', timestamp: new Date().toISOString(), retries: attempts }]);
+          setLogs((prevLogs) => [
+            ...prevLogs,
+            {
+              prompt,
+              code: '# Error',
+              output: 'Max retries reached.',
+              timestamp: new Date().toISOString(),
+              retries: attempts,
+            },
+          ]);
         }
       }
     }
@@ -53,12 +82,17 @@ function App() {
   const exportLogs = () => {
     const data = JSON.stringify(logs, null, 2);
     const blob = new Blob([data], { type: 'application/json' });
-    saveAs(blob, `recursive-ai-logs-${new Date().toISOString().split('T')[0]}.json`);
+    saveAs(
+      blob,
+      `recursive-ai-logs-${new Date().toISOString().split('T')[0]}.json`
+    );
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Recursive AI Executor</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-6">
+        Recursive AI Executor
+      </h1>
       <p className="text-lg text-gray-700 mb-2">Enter your prompt:</p>
       <textarea
         value={prompt}
@@ -72,26 +106,35 @@ function App() {
         <button
           onClick={handleGenerate}
           className="bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 transition"
-          style={{ marginTop: '18px', padding: '16px 40px', fontSize: '28px', width: '300px' }}
+          style={{
+            marginTop: '18px',
+            padding: '16px 40px',
+            fontSize: '28px',
+            width: '300px',
+          }}
           disabled={loading}
         >
           {loading ? 'Generating...' : 'Generate Code'}
         </button>
       </div>
       <div className="mt-6 w-[700px]">
-        <h2 className="text-xl font-semibold text-gray-900 mb-2">Generated Code (Read-Only)</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          Generated Code (Read-Only)
+        </h2>
         <pre className="bg-gray-900 text-green-400 p-4 rounded-md text-left text-sm font-mono w-full whitespace-pre-wrap shadow-lg">
           <code className="language-python">{code}</code>
         </pre>
-        <h2 className="text-xl font-semibold text-gray-900 mt-4 mb-2">Terminal Output</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mt-4 mb-2">
+          Terminal Output
+        </h2>
         <pre className="bg-gray-800 text-white p-4 rounded-md text-left text-sm font-mono w-full whitespace-pre-wrap shadow-lg">
           {output}
         </pre>
         <p className="mt-2 text-lg text-gray-700">Retry Attempts: {retryCount}</p>
         <button
           onClick={exportLogs}
-          className="bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 transition px-8 py-3" // Increased padding by 30%
-          style={{ fontSize: '24px' }} // Increased font size by 30% (from ~18px to 24px)
+          className="bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 transition px-8 py-3"
+          style={{ fontSize: '24px' }}
         >
           Export Logs
         </button>

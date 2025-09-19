@@ -1,0 +1,13 @@
+{
+  "prompt": "generate a code to check if a number is a prime number",
+  "attempts": [
+    {
+      "attempt": 1,
+      "code": "import math\n\ndef is_prime_basic(n):\n  \"\"\"Checks if n is a prime number using basic trial division.\n\n  Args:\n    n: The number to check.\n\n  Returns:\n    True if n is prime, False otherwise.  Returns False for n <= 1.\n  \"\"\"\n  if n <= 1:\n    return False\n  for i in range(2, int(math.sqrt(n)) + 1):\n    if n % i == 0:\n      return False\n  return True\n\n#Example Usage\nprint(is_prime_basic(2))   # True\nprint(is_prime_basic(15))  # False\nprint(is_prime_basic(97))  # True",
+      "stdout": "True\nFalse\nTrue\n",
+      "stderr": "",
+      "success": true
+    }
+  ],
+  "timestamp": "2025-09-19 13:00:14.750003"
+}

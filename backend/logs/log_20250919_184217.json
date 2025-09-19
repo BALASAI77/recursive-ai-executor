@@ -1,0 +1,13 @@
+{
+  "prompt": "write a function to check prime number",
+  "attempts": [
+    {
+      "attempt": 1,
+      "code": "def is_prime_basic(n):\n  \"\"\"Checks if a number is prime (basic, inefficient version).\"\"\"\n  if n <= 1:\n    return False\n  for i in range(2, n):\n    if n % i == 0:\n      return False\n  return True\n",
+      "stdout": "",
+      "stderr": "",
+      "success": true
+    }
+  ],
+  "timestamp": "2025-09-19 18:42:09.012534"
+}

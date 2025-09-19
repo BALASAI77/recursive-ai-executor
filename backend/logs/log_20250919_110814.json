@@ -1,0 +1,20 @@
+{
+  "prompt": "Generate code to print 'Hello from Gemini'",
+  "attempts": [
+    {
+      "attempt": 1,
+      "code": "print('Hello from Gemini')",
+      "stdout": "",
+      "stderr": "Execution timed out",
+      "success": false
+    },
+    {
+      "attempt": 2,
+      "code": "print('Hello from Gemini')",
+      "stdout": "Hello from Gemini\n",
+      "stderr": "",
+      "success": true
+    }
+  ],
+  "timestamp": "2025-09-19 11:08:01.196642"
+}

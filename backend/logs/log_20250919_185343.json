@@ -1,0 +1,13 @@
+{
+  "prompt": "write a code to check if it is a armstrong number",
+  "attempts": [
+    {
+      "attempt": 1,
+      "code": "def is_armstrong_string(num):\n    \"\"\"Checks if a number is an Armstrong number using string manipulation.\"\"\"\n    num_str = str(num)\n    num_digits = len(num_str)\n    sum_of_powers = sum(int(digit) ** num_digits for digit in num_str)\n    return sum_of_powers == num\n\n# Example usage\nnumber = 153\nif is_armstrong_string(number):\n    print(f\"{number} is an Armstrong number\")\nelse:\n    print(f\"{number} is not an Armstrong number\")\n\n\nnumber = 370\nif is_armstrong_string(number):\n    print(f\"{number} is an Armstrong number\")\nelse:\n    print(f\"{number} is not an Armstrong number\")\n\nnumber = 371\nif is_armstrong_string(number):\n    print(f\"{number} is an Armstrong number\")\nelse:\n    print(f\"{number} is not an Armstrong number\")\n\nnumber = 1634\nif is_armstrong_string(number):\n    print(f\"{number} is an Armstrong number\")\nelse:\n    print(f\"{number} is not an Armstrong number\")\n",
+      "stdout": "153 is an Armstrong number\n370 is an Armstrong number\n371 is an Armstrong number\n1634 is an Armstrong number\n",
+      "stderr": "",
+      "success": true
+    }
+  ],
+  "timestamp": "2025-09-19 18:53:30.305149"
+}

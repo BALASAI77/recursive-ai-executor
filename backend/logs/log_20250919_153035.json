@@ -1,0 +1,27 @@
+{
+  "prompt": "generate a code for fibonacci series",
+  "attempts": [
+    {
+      "attempt": 1,
+      "code": "def fibonacci_iterative(n):\n  \"\"\"\n  Generates a Fibonacci sequence up to n terms iteratively.\n\n  Args:\n    n: The number of terms to generate.\n\n  Returns:\n    A list containing the Fibonacci sequence.\n  \"\"\"\n  if n <= 0:\n    return []\n  elif n == 1:\n    return [0]\n  else:\n    list_fib = [0, 1]\n    while len(list_fib) < n:\n      next_fib = list_fib[-1] + list_fib[-2]\n      list_fib.append(next_fib)\n    return list_fib\n\nprint(fibonacci_iterative(10))  # Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]",
+      "stdout": "",
+      "stderr": "Execution timed out",
+      "success": false
+    },
+    {
+      "attempt": 2,
+      "code": "def fibonacci_iterative(n):\n    \"\"\"Generates a Fibonacci sequence iteratively up to n.\"\"\"\n    if n <= 0:\n        return []\n    elif n == 1:\n        return [0]\n    else:\n        list_fib = [0, 1]\n        while len(list_fib) < n:\n            next_fib = list_fib[-1] + list_fib[-2]\n            list_fib.append(next_fib)\n        return list_fib\n\n#Example\nprint(fibonacci_iterative(10)) # Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]",
+      "stdout": "",
+      "stderr": "Execution timed out",
+      "success": false
+    },
+    {
+      "attempt": 3,
+      "code": "def fibonacci_iterative(n):\n    \"\"\"\n    Generates the first n Fibonacci numbers iteratively.\n    \"\"\"\n    if n <= 0:\n        return []\n    elif n == 1:\n        return [0]\n    else:\n        list_fib = [0, 1]\n        while len(list_fib) < n:\n            next_fib = list_fib[-1] + list_fib[-2]\n            list_fib.append(next_fib)\n        return list_fib\n\n#Example\nprint(fibonacci_iterative(10))  # Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]",
+      "stdout": "[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\n",
+      "stderr": "",
+      "success": true
+    }
+  ],
+  "timestamp": "2025-09-19 15:29:56.095521"
+}

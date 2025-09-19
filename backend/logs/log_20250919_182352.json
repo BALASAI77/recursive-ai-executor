@@ -1,0 +1,20 @@
+{
+  "prompt": "write code to say hi",
+  "attempts": [
+    {
+      "attempt": 1,
+      "code": "print(\"Hi\")",
+      "stdout": "",
+      "stderr": "Execution timed out",
+      "success": false
+    },
+    {
+      "attempt": 2,
+      "code": "print(\"Hi\")",
+      "stdout": "Hi\n",
+      "stderr": "",
+      "success": true
+    }
+  ],
+  "timestamp": "2025-09-19 18:23:07.950637"
+}

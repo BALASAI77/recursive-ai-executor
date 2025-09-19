@@ -1,0 +1,13 @@
+{
+  "prompt": "write code to add two numbers",
+  "attempts": [
+    {
+      "attempt": 1,
+      "code": "def add_numbers(x, y):\n  \"\"\"Adds two numbers together.\n\n  Args:\n    x: The first number.\n    y: The second number.\n\n  Returns:\n    The sum of x and y.\n  \"\"\"\n  return x + y\n\n# Example usage\nnum1 = 10\nnum2 = 5\nsum = add_numbers(num1, num2)\nprint(f\"The sum of {num1} and {num2} is: {sum}\")",
+      "stdout": "The sum of 10 and 5 is: 15\n",
+      "stderr": "",
+      "success": true
+    }
+  ],
+  "timestamp": "2025-09-19 18:31:03.628898"
+}

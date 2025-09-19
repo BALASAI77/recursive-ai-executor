@@ -1,0 +1,13 @@
+{
+  "prompt": "write code to print fibonacci series",
+  "attempts": [
+    {
+      "attempt": 1,
+      "code": "def fibonacci_iterative(n):\n  \"\"\"Prints the Fibonacci series up to n terms.\"\"\"\n  a, b = 0, 1\n  if n <= 0:\n    return\n  elif n == 1:\n    print(a)\n  else:\n    print(a)\n    print(b)\n    for i in range(2, n):\n      c = a + b\n      print(c)\n      a, b = b, c\n\nfibonacci_iterative(10)  # Prints the first 10 Fibonacci numbers",
+      "stdout": "0\n1\n1\n2\n3\n5\n8\n13\n21\n34\n",
+      "stderr": "",
+      "success": true
+    }
+  ],
+  "timestamp": "2025-09-19 18:32:11.447013"
+}

@@ -1,0 +1,20 @@
+{
+  "prompt": "write code to check if a number is palindrome or not\n",
+  "attempts": [
+    {
+      "attempt": 1,
+      "code": "def is_palindrome(number):\n  \"\"\"Checks if a number is a palindrome.\n\n  Args:\n    number: The number to check.\n\n  Returns:\n    True if the number is a palindrome, False otherwise.\n  \"\"\"\n  number_str = str(number)\n  return number_str == number_str[::-1]\n\n# Example usage\nnum1 = 121\nnum2 = 123\nprint(f\"{num1} is a palindrome: {is_palindrome(num1)}\")  # Output: True\nprint(f\"{num2} is a palindrome: {is_palindrome(num2)}\")  # Output: False\n",
+      "stdout": "",
+      "stderr": "Execution timed out",
+      "success": false
+    },
+    {
+      "attempt": 2,
+      "code": "def is_palindrome(n):\n  \"\"\"Checks if a number is a palindrome using string reversal.\"\"\"\n  n_str = str(n)\n  return n_str == n_str[::-1]\n\n# Example usage\nnumber = 12321\nif is_palindrome(number):\n  print(f\"{number} is a palindrome\")\nelse:\n  print(f\"{number} is not a palindrome\")\n\nnumber = 12345\nif is_palindrome(number):\n  print(f\"{number} is a palindrome\")\nelse:\n  print(f\"{number} is not a palindrome\")",
+      "stdout": "12321 is a palindrome\n12345 is not a palindrome\n",
+      "stderr": "",
+      "success": true
+    }
+  ],
+  "timestamp": "2025-09-19 19:00:37.925649"
+}

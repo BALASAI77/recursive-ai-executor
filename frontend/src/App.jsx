@@ -27,7 +27,7 @@ function App() {
       attempts++;
       setRetryCount(attempts); // Update retry count for each attempt
       try {
-        const response = await axios.post('http://localhost:8000/execute', { prompt });
+        const response = await axios.post('https://recursive-ai-executor-3.onrender.com/execute', { prompt });
         setCode(response.data.final_code || '# No code generated...');
         setOutput(response.data.output || 'No terminal output available. Backend may not execute code.');
         setLogs([...logs, { prompt, code: response.data.final_code, output: response.data.output, timestamp: new Date().toISOString(), retries: attempts }]);

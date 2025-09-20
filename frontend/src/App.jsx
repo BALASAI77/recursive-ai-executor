@@ -12,8 +12,6 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
 
-  const backendURL = import.meta.env.VITE_BACKEND_URL; // 🔑 Load from env
-
   const handleGenerate = async () => {
     if (!prompt.trim()) {
       alert('Please enter a prompt!');
@@ -29,38 +27,22 @@ function App() {
       attempts++;
       setRetryCount(attempts);
       try {
-        const response = await axios.post(`${backendURL}/execute`, { prompt });
-        setCode(response.data.final_code || '# No code generated...');
-        setOutput(
-          response.data.output ||
-            'No terminal output available. Backend may not execute code.'
-        );
-        setLogs([
-          ...logs,
-          {
-            prompt,
-            code: response.data.final_code,
-            output: response.data.output,
-            timestamp: new Date().toISOString(),
-            retries: attempts,
-          },
-        ]);
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/execute`, { prompt });
+        const { final_code, output: exec_output, error, success, attempts_count } = response.data;
+        setCode(final_code || '# No code generated...');
+        setOutput(exec_output || error || 'No terminal output available.');
+        setLogs([...logs, { prompt, code: final_code, output: exec_output || error, timestamp: new Date().toISOString(), retries: attempts_count || attempts }]);
+        if (!success && attempts === maxRetries) {
+          setCode('# Error after max retries...');
+          setOutput('Max retries reached.');
+        }
         break;
       } catch (error) {
         console.error('Error on attempt', attempts, ':', error);
         if (attempts === maxRetries) {
-          setCode('# Error connecting to backend after max retries...');
+          setCode('# Error connecting to backend...');
           setOutput('Max retries reached. Check backend logs.');
-          setLogs([
-            ...logs,
-            {
-              prompt,
-              code: '# Error',
-              output: 'Max retries reached.',
-              timestamp: new Date().toISOString(),
-              retries: attempts,
-            },
-          ]);
+          setLogs([...logs, { prompt, code: '# Error', output: 'Max retries reached.', timestamp: new Date().toISOString(), retries: attempts }]);
         }
       }
     }

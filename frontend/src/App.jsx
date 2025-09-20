@@ -25,17 +25,22 @@ function App() {
 
     while (attempts < maxRetries) {
       attempts++;
-      setRetryCount(attempts); // Update retry count for each attempt
+      setRetryCount(attempts);
       try {
-        const response = await axios.post('http://localhost:8000/execute', { prompt });
-        setCode(response.data.final_code || '# No code generated...');
-        setOutput(response.data.output || 'No terminal output available. Backend may not execute code.');
-        setLogs([...logs, { prompt, code: response.data.final_code, output: response.data.output, timestamp: new Date().toISOString(), retries: attempts }]);
-        break; // Exit on success
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/execute`, { prompt });
+        const { final_code, output: exec_output, error, success, attempts_count } = response.data;
+        setCode(final_code || '# No code generated...');
+        setOutput(exec_output || error || 'No terminal output available.');
+        setLogs([...logs, { prompt, code: final_code, output: exec_output || error, timestamp: new Date().toISOString(), retries: attempts_count || attempts }]);
+        if (!success && attempts === maxRetries) {
+          setCode('# Error after max retries...');
+          setOutput('Max retries reached.');
+        }
+        break;
       } catch (error) {
         console.error('Error on attempt', attempts, ':', error);
         if (attempts === maxRetries) {
-          setCode('# Error connecting to backend after max retries...');
+          setCode('# Error connecting to backend...');
           setOutput('Max retries reached. Check backend logs.');
           setLogs([...logs, { prompt, code: '# Error', output: 'Max retries reached.', timestamp: new Date().toISOString(), retries: attempts }]);
         }
@@ -90,8 +95,8 @@ function App() {
         <p className="mt-2 text-lg text-gray-700">Retry Attempts: {retryCount}</p>
         <button
           onClick={exportLogs}
-          className="bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 transition px-8 py-3" // Increased padding by 30%
-          style={{ fontSize: '24px' }} // Increased font size by 30% (from ~18px to 24px)
+          className="bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 transition px-8 py-3"
+          style={{ fontSize: '24px' }}
         >
           Export Logs
         </button>
